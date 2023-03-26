@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>🎲Dice Game | Good Luck🎲</title>
+    <link
+      rel="stylesheet"
+      href="	https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css"
+    />
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
+    <style>
+      .player {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+      }
+
+      .col-12.text-center img {
+        display: block;
+        margin: 0 auto;
+        margin-bottom: 45px;
+      }
+
+      .score {
+        margin-top: 5px;
+      }
+      .center {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+      }
+    </style>
+  </head>
+  <body>
+    <div
+      class="container"
+      style="background-color: rgb(66, 99, 59); border-radius: 20%"
+    >
+      <div class="row">
+        <div class="col-12 text-center">
+          <img src="static/img/dice.png" alt="骰子" />
+        </div>
+        <div class="col-11 text-right">
+          <button
+            type="button"
+            class="btn btn-outline-danger float-end"
+            onclick="restartGame()"
+          >
+            🚫EXIT
+          </button>
+        </div>
+      </div>
+      <div class="row mt-5">
+        <div class="col-6 player">
+          <h3>Player 1: {{ player1_name }}</h3>
+          <div class="score" style="color: red">
+            <h4>Score: {{ player1_score }}</h4>
+          </div>
+        </div>
+        <div class="col-6 player">
+          <h3 class="text-right">Player 2: {{ player2_name }}</h3>
+          <div class="score text-right" style="color: red">
+            <h4>Score: {{ player2_score }}</h4>
+          </div>
+        </div>
+      </div>
+      <div class="row mt-1">
+        <div class="col-12 text-center" style="color: rgb(217, 255, 0)">
+          {% if dice_value == 1 %} {% if current_player == player1_name %}
+          <h4>Oops! {{ player2_name }} got 1 and lost the turn</h4>
+          {% else %}
+          <h4>Oops! {{ player1_name }} got 1 and lost the turn</h4>
+          {% endif %}
+          <img
+            src="{{ url_for('static', filename='img/dice_1.png') }}"
+            alt="Die1"
+          />
+          {% elif dice_value == 2 %}
+          <img
+            src="{{ url_for('static', filename='img/dice_2.png') }}"
+            alt="Die2"
+          />
+          {% elif dice_value == 3 %}
+          <img
+            src="{{ url_for('static', filename='img/dice_3.png') }}"
+            alt="Die3"
+          />
+          {% elif dice_value == 4 %}
+          <img
+            src="{{ url_for('static', filename='img/dice_4.png') }}"
+            alt="Die4"
+          />
+          {% elif dice_value == 5 %}
+          <img
+            src="{{ url_for('static', filename='img/dice_5.png') }}"
+            alt="Die5"
+          />
+          {% elif dice_value == 6 %}
+          <img
+            src="{{ url_for('static', filename='img/dice_6.png') }}"
+            alt="Die6"
+          />
+          {% endif %}
+          <h3>Now it's {{ current_player }}'s turn</h3>
+          <form class="center d-inline-block" action="/roll_dice" method="POST">
+            <button type="submit" class="btn btn-outline-info mr-3">
+              🎲ROLL
+            </button>
+          </form>
+          <form class="center d-inline-block" action="/hold" method="POST">
+            <button type="submit" class="btn btn-outline-warning">
+              ⏸️HOLD
+            </button>
+          </form>
+        </div>
+      </div>
+
+      <br />
+      <div style="text-align: center">
+        <h4>🏆Let's see who will win the Game!🏆</h4>
+        <img
+          src="https://media.tenor.com/VHOAgVJbEkwAAAAC/dice-dance-dancing-dice.gif"
+          alt="dancing-dice"
+        />
+      </div>
+    </div>
+    <script>
+      function restartGame() {
+        // clear all scores and player names
+        localStorage.clear();
+        // and redirect to home.html to start a new game
+        window.location.href = "/";
+      }
+    </script>
+  </body>
+</html>
